@@ -146,6 +146,8 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    responders (1.0.0)
+      railties (>= 3.2, < 5)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -221,6 +223,7 @@ DEPENDENCIES
   puma
   rack-cache
   rails (= 3.2.16)
+  responders
   rspec-rails
   sass-rails (~> 3.2.3)
   simple_form
