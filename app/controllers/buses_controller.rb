@@ -1,25 +1,26 @@
 class BusesController < ApplicationController
+  self.responder = BusesResponder
   respond_to :html, :json, only: :index
   before_filter :authenticate!
+  helper_method :serialized_assignments
 
   def index
-    search = AssignmentSearch.find(session[:contact_id])
-    assignments = search.assignments
-
-    if search.errors.any?
-      flash.now.alert = search.errors.messages.values.flatten.first
-    end
-
-    if assignments.without_gps_data.any?
-      names_of_missing = assignments.without_gps_data.map(&:student_name).join(', ')
-      flash.now.alert = "We're sorry, but no GPS information is currently available for #{names_of_missing}. Please call the transportation hotline at 617-635-9520."
-    end
-
-    @assignments = ActiveModel::ArraySerializer.new(assignments.with_gps_data)
-    respond_with(@assignments)
+    respond_with(assignments)
   end
 
   private
+
+  def search
+    @search ||= AssignmentSearch.find(session[:contact_id])
+  end
+
+  def assignments
+    @assignments ||= search.assignments
+  end
+
+  def serialized_assignments
+    ActiveModel::ArraySerializer.new(assignments.with_gps_data)
+  end
 
   def authenticate!
     if session_exists? && session_expired?
@@ -36,5 +37,9 @@ class BusesController < ApplicationController
         format.json { head 401 }
       end
     end
+  end
+
+  def interpolation_options
+    { names: assignments.without_gps_data.map(&:student_name).join(', ') }
   end
 end
