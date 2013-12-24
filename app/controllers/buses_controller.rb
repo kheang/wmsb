@@ -4,17 +4,18 @@ class BusesController < ApplicationController
 
   def index
     search = AssignmentSearch.find(session[:contact_id])
+    assignments = search.assignments
 
     if search.errors.any?
       flash.now.alert = search.errors.messages.values.flatten.first
     end
 
-    if search.assignments_without_gps_data.any?
-      names_of_missing = search.assignments_without_gps_data.map(&:student_name).join(', ')
+    if assignments.without_gps_data.any?
+      names_of_missing = assignments.without_gps_data.map(&:student_name).join(', ')
       flash.now.alert = "We're sorry, but no GPS information is currently available for #{names_of_missing}. Please call the transportation hotline at 617-635-9520."
     end
 
-    @assignments = ActiveModel::ArraySerializer.new(search.assignments_with_gps_data)
+    @assignments = ActiveModel::ArraySerializer.new(assignments.with_gps_data)
     respond_with(@assignments)
   end
 

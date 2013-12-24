@@ -27,8 +27,6 @@ describe AssignmentSearch do
 
       search = AssignmentSearch.find(123)
 
-      search.assignments.should be_instance_of Array
-
       assignment = search.assignments.first
 
       assignment.parent_first_name.should eq 'Ned'

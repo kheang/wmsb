@@ -6,6 +6,8 @@ class AssignmentSearch
 
   attr_reader :assignments, :errors
 
+  alias :read_attribute_for_validation :send
+
   def self.find(aspen_contact_id)
     new(aspen_contact_id).find
   end
@@ -16,7 +18,7 @@ class AssignmentSearch
   end
 
   def find
-    response_body =  Rails.cache.fetch(cache_key, expires_in: 12.hours) do
+    response_body = Rails.cache.fetch(cache_key, expires_in: 12.hours) do
       response = connection.get(
         '/bpswstr/Connect.svc/bus_assignments',
         aspen_contact_id: @aspen_contact_id,
@@ -33,27 +35,11 @@ class AssignmentSearch
       response.success? ? response.body : nil
     end
 
-    if response_body.present?
-      assignments = JSON.parse(response_body)
-      @assignments = assignments.map do |assignment|
-        BusAssignment.new(assignment, trip_flag)
-      end
-    else
-      @assignments = []
-    end
+    assignments = response_body.present? ? JSON.parse(response_body) : []
+    @assignments = AssignmentCollection.new(assignments, trip_flag)
 
-    return self
+    self
   end
-
-  def assignments_with_gps_data
-    assignments.select(&:gps_available?)
-  end
-
-  def assignments_without_gps_data
-    assignments.reject(&:gps_available?)
-  end
-
-  alias :read_attribute_for_validation :send
 
   private
 
