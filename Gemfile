@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
-gem 'rails', '3.2.16'
+gem 'rails', '4.0.5'
 gem 'haml'
 gem 'faraday'
 gem 'active_model_serializers'
@@ -12,8 +12,8 @@ gem 'simple_form'
 gem 'rack-cache'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails',   '~> 4.0.0'
+  gem 'coffee-rails', '~> 4.0.0'
   gem 'bourbon'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
