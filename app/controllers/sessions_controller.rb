@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_filter :redirect_to_buses, only: :new
+  before_action :redirect_to_buses, only: :new
 
   def new
     @session = ContactId.new

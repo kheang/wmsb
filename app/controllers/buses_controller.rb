@@ -1,6 +1,6 @@
 class BusesController < ApplicationController
   respond_to :html, :json, only: :index
-  before_filter :authenticate!
+  before_action :authenticate!
 
   def index
     search = AssignmentSearch.find(session[:contact_id])
