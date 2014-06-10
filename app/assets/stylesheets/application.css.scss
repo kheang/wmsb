@@ -1,9 +1,11 @@
 @import 'bourbon';
-@import 'variables';
-@import 'fonts';
-@import 'base';
-@import 'icons';
-@import 'layout';
-@import 'login';
-@import 'buses';
-@import 'ltie9';
+
+@import 'shared/variables'
+@import 'shared/fonts';
+@import 'shared/layout';
+@import 'shared/icons';
+@import 'shared/elements';
+@import 'shared/ie';
+
+@import 'sessions/new';
+@import 'buses/index';
