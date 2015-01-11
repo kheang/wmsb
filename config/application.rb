@@ -72,6 +72,8 @@ module Wmsb
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.i18n.enforce_available_locales = true
+
     unless RUBY_PLATFORM == 'java'
       config.middleware.use Rack::Deflater
     end
