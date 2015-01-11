@@ -2,10 +2,18 @@
 
 ## Setup
 
+This project uses a `.ruby_version` to specify what version of ruby to use. You
+can use a number of ruby version managers to get this. A list of common options
+if provided below.
+
 To setup for development, run from the project root:
 
 ```
-cp .env.example .env # Relace with correct values
-bundle install
-foreman start
+bin/setup
 ```
+
+### Ruby Version Managers
+
+* [rbenv](https://github.com/sstephenson/rbenv)
+* [RVM](https://rvm.io/)
+* [chruby](https://github.com/postmodern/chruby)
